@@ -1,8 +1,14 @@
+from collections import Counter
+
+from toolz import pipe,partial
+
 from app.db.db_psql.database import session_maker
 from app.db.db_psql.models.person import Person
 from app.db.db_psql.models.suspicious_hostage_content import SuspiciousHostageContent
-from app.repository.psql_repository.messages_explosive_repository import get_suspicious_explosive_content_by_email
-from app.repository.psql_repository.messages_hostage_repository import get_suspicious_hostage_content_by_email
+from app.repository.psql_repository.messages_explosive_repository import get_suspicious_explosive_content_by_email, \
+    get_all_explosive_sentences
+from app.repository.psql_repository.messages_hostage_repository import get_suspicious_hostage_content_by_email, \
+    get_all_hostage_sentences
 from app.service.producers_service.messages_explosive_producer import produce_messages_explosive
 from app.service.producers_service.messages_hostage_producer import produce_messages_hostage
 import re
@@ -38,6 +44,18 @@ def get_all_suspicious_content(email: str):
     all_suspicious_content = suspicious_explosive_content + suspicious_hostage_content
     return all_suspicious_content
 
-# def get_most_common_word():
 
+def get_most_common_word():
+    explosive_sentences = [explosive.sentence for explosive in get_all_explosive_sentences()]
+    hostage_sentences = [hostage.sentence for hostage in get_all_hostage_sentences()]
+    return pipe(
+        explosive_sentences + hostage_sentences,
+        "".join,
+        lambda sen: sen.replace(".", " "),
+        lambda sen: sen.replace(",", " "),
+        lambda sen: sen.split(),
+        partial(map, str.lower),
+        list,
+        lambda words: Counter(words).most_common(1)[0]
+    )
 

@@ -35,5 +35,8 @@ def get_suspicious_explosive_content_by_email(email: str):
         return
 
 
+def get_all_explosive_sentences():
+    with session_maker() as session:
+        return session.query(SuspiciousExplosiveContent).all()
 
 

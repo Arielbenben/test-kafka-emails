@@ -1,7 +1,5 @@
 from typing import List
-
 from sqlalchemy.exc import SQLAlchemyError
-from sqlalchemy.orm import joinedload
 from app.db.db_psql.database import session_maker
 from app.db.db_psql.models.person import Person
 from app.db.db_psql.models import SuspiciousHostageContent
@@ -35,3 +33,7 @@ def get_suspicious_hostage_content_by_email(email: str):
         print(f'Error: {e}')
         return
 
+
+def get_all_hostage_sentences():
+    with session_maker() as session:
+        return session.query(SuspiciousHostageContent).all()

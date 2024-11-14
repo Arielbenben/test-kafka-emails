@@ -16,7 +16,5 @@ def insert_location_to_db(location: Location):
     return
 
 
-def get_all_locations():
-    with session_maker() as session:
-        return session.query(Location).options(joinedload(Location.person)).all()
+
 

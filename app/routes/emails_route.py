@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from app.service.producers_service.emails_producer import produce_email
-from app.service.sentences_service import check_type_sentences, get_all_suspicious_content
+from app.service.sentences_service import check_type_sentences, get_all_suspicious_content, get_most_common_word
 
 
 emails_blueprint = Blueprint('api', __name__)
@@ -30,11 +30,11 @@ def get_all_suspicious_content_route(email: str):
         return jsonify({'error': f'Failed to get content for email: {email}'}), 500
 
 
-# @emails_blueprint.route('/most_common', methods=['GET'])
-# def get_most_common_word_route():
-#     try:
-#         word = get_most_common_word()
-#         return jsonify({'message': f'The most common word is: {word}'}), 200
-#     except Exception as e:
-#         print(f'Failed to get the most common word. Error: {e}')
-#         return jsonify({'Erorr': 'Failed to get the most common word'})
+@emails_blueprint.route('/email/most_common', methods=['GET'])
+def get_most_common_word_route():
+    try:
+        word = get_most_common_word()
+        return jsonify({'message': f'The most common word is: {word}'}), 200
+    except Exception as e:
+        print(f'Failed to get the most common word. Error: {e}')
+        return jsonify({'Erorr': 'Failed to get the most common word'})
