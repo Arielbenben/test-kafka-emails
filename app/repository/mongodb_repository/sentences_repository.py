@@ -1,4 +1,4 @@
-from app.db_mongo.database import all_emails_collection
+from app.db.db_mongo.database import all_emails_collection
 
 
 

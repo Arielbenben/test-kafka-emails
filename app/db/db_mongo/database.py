@@ -1,8 +1,8 @@
 from pymongo import MongoClient
-from app.settings.mongo_config import DB_URL
+from app.settings.mongo_config import MONGO_DB_URL
 
 
-client = MongoClient(DB_URL)
+client = MongoClient(MONGO_DB_URL)
 
 
 emails_db = client['emails']
