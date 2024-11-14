@@ -13,12 +13,11 @@ class SuspiciousHostageContent(Base):
     person = relationship('Person', back_populates='suspicious_hostage_content')
 
     def __repr__(self):
-        return f'Suspicious Hostage Content: id:{self.id}, sentence:{self.sentence}, person_id: {self.person_id}, person: {self.person}'
+        return f'Suspicious Hostage Content: id:{self.id}, sentence:{self.sentence}, person_id: {self.person_id}'
 
     def to_dict(self):
         return {
             'id': self.id,
             'sentence': self.sentence,
-            'person_id': self.person_id,
-            'person': self.person.to_dict()
+            'person_id': self.person_id
         }

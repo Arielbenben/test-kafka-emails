@@ -46,4 +46,3 @@ def get_person_by_email(email: str):
         return person.to_dict() if person else None
 
 
-print(get_person_by_email('kevin46@example.com'))

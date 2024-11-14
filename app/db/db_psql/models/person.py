@@ -29,8 +29,8 @@ class Person(Base):
             'email': self.email,
             'ip_address': self.ip_address,
             'created_at': self.created_at,
-            'suspicious_explosive_content': self.suspicious_explosive_content,
-            'suspicious_hostage_content': self.suspicious_hostage_content,
-            'location': self.location,
-            'device_info': self.device_info
+            'suspicious_explosive_content': [content.to_dict() for content in self.suspicious_explosive_content],
+            'suspicious_hostage_content': [content.to_dict() for content in self.suspicious_hostage_content],
+            'location': self.location.to_dict(),
+            'device_info': self.device_info.to_dict()
         }

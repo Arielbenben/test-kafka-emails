@@ -24,7 +24,8 @@ def get_all_sentences_route():
 def get_all_suspicious_content_route(email: str):
     try:
         suspicious_content = get_all_suspicious_content(email)
-        return jsonify({'suspicious_content': suspicious_content})
+        print(suspicious_content)
+        return jsonify(suspicious_content), 200
     except Exception as e:
         print(f'Error: {e}')
         return jsonify({'error': f'Failed to get content for email: {email}'}), 500
@@ -37,4 +38,4 @@ def get_most_common_word_route():
         return jsonify({'message': f'The most common word is: {word}'}), 200
     except Exception as e:
         print(f'Failed to get the most common word. Error: {e}')
-        return jsonify({'Error': 'Failed to get the most common word'})
+        return jsonify({'Error': 'Failed to get the most common word'}), 500
