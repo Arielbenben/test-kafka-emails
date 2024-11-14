@@ -1,6 +1,9 @@
 from typing import List
+from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy.orm import joinedload
 from app.db.db_psql.database import session_maker
-from app.db.db_psql.models.suspicious_explosive_content import SuspiciousExplosiveContent
+from app.db.db_psql.models.person import Person
+from app.db.db_psql.models import SuspiciousExplosiveContent, SuspiciousHostageContent
 
 
 def insert_explosive_sentence_to_db(sentences: List[SuspiciousExplosiveContent]):
@@ -12,4 +15,25 @@ def insert_explosive_sentence_to_db(sentences: List[SuspiciousExplosiveContent])
     except Exception as e:
         session.rollback()
         print(f"Error inserting explosive sentence: {e}")
+
+
+
+def get_suspicious_explosive_content_by_email(email: str):
+    try:
+        with session_maker() as session:
+            person = session.query(Person).filter(Person.email == email).first()
+            if not person:
+                return None
+
+            suspicious_content = session.query(SuspiciousExplosiveContent.sentence) \
+                .join(Person, SuspiciousExplosiveContent.person_id == Person.id) \
+                .filter(Person.id == person.id) \
+                .all()
+            return [content.sentence for content in suspicious_content]
+    except SQLAlchemyError as e:
+        print(f'Error: {e}')
+        return
+
+
+
 
