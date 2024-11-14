@@ -16,7 +16,16 @@ class DeviceInfo(Base):
 
     def __repr__(self):
         return (f"""DeviceInfo: (id={self.id}, browser='{self.browser}', os='{self.os}',
-                "device_id='{self.device_id}', person_id={self.person_id}, person={self.person})"""
+                "device_id='{self.device_id}', person_id={self.person_id})"""
         )
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'browser': self.browser,
+            'os': self.os,
+            'device_id': self.device_id,
+            'person_id': self.person_id,
+        }
 
 

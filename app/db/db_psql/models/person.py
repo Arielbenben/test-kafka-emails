@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import relationship
 from app.db.db_psql.models import Base
 
@@ -20,7 +20,7 @@ class Person(Base):
 
     def __repr__(self):
         return f"""Person: id:{self.id}, username:{self.username}, email: {self.email}, ip_address: {self.ip_address},
-                    created_at:{self.created_at} """
+                    created_at:{self.created_at}, location: {self.location}, device_info: {self.device_info} """
 
     def to_dict(self):
         return {
@@ -29,8 +29,8 @@ class Person(Base):
             'email': self.email,
             'ip_address': self.ip_address,
             'created_at': self.created_at,
-            'suspicious_explosive_content': [content.to_dict() for content in self.suspicious_explosive_content],
-            'suspicious_hostage_content': [content.to_dict() for content in self.suspicious_hostage_content],
-            'location': self.location.to_dict() if self.location else None,
-            'device_info': self.device_info.to_dict() if self.device_info else None
+            'suspicious_explosive_content': self.suspicious_explosive_content,
+            'suspicious_hostage_content': self.suspicious_hostage_content,
+            'location': self.location,
+            'device_info': self.device_info
         }

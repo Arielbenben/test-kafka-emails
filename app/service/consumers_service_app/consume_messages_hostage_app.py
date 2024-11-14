@@ -5,6 +5,7 @@ from flask import Flask
 from kafka import KafkaConsumer
 from app.service.hostage_messages_service import insert_hostage_messages_db
 
+
 load_dotenv(verbose=True)
 
 

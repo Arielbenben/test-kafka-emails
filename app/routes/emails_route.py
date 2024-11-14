@@ -37,4 +37,4 @@ def get_most_common_word_route():
         return jsonify({'message': f'The most common word is: {word}'}), 200
     except Exception as e:
         print(f'Failed to get the most common word. Error: {e}')
-        return jsonify({'Erorr': 'Failed to get the most common word'})
+        return jsonify({'Error': 'Failed to get the most common word'})

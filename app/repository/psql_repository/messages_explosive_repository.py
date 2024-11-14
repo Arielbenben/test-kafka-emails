@@ -1,9 +1,8 @@
 from typing import List
 from sqlalchemy.exc import SQLAlchemyError
-from sqlalchemy.orm import joinedload
 from app.db.db_psql.database import session_maker
 from app.db.db_psql.models.person import Person
-from app.db.db_psql.models import SuspiciousExplosiveContent, SuspiciousHostageContent
+from app.db.db_psql.models import SuspiciousExplosiveContent
 
 
 def insert_explosive_sentence_to_db(sentences: List[SuspiciousExplosiveContent]):

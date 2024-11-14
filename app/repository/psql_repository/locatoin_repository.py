@@ -1,5 +1,3 @@
-from sqlalchemy.orm import joinedload
-
 from app.db.db_psql.database import session_maker
 from app.db.db_psql.models.location import Location
 

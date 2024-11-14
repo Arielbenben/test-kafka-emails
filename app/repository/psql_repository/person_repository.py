@@ -1,3 +1,4 @@
+from sqlalchemy.orm import joinedload
 from app.db.db_psql.database import session_maker
 from app.db.db_psql.models.person import Person
 
@@ -28,3 +29,21 @@ def update_all_id_to_person(location_id: int, device_info_id: int, person_id: in
     except Exception as e:
         session.rollback()
         print(f"Error updating person: {e}")
+
+
+
+def get_person_by_email(email: str):
+    with session_maker() as session:
+        person = (
+            session.query(Person)
+            .options(joinedload(Person.suspicious_explosive_content),
+                     joinedload(Person.suspicious_hostage_content),
+                     joinedload(Person.location),
+                     joinedload(Person.device_info))
+            .filter(Person.email == email)
+            .first()
+        )
+        return person.to_dict() if person else None
+
+
+print(get_person_by_email('kevin46@example.com'))
